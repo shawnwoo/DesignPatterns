@@ -6,6 +6,7 @@ import java.util.Vector;
 public class Comment implements Subject{
 	
 	private Vector observersVector=new java.util.Vector();
+	private String words;
 
 	@Override
 	public void attach(Observer observer) {
@@ -25,7 +26,9 @@ public class Comment implements Subject{
 		// TODO Auto-generated method stub
 		Enumeration enu=observers();
 		while(enu.hasMoreElements()){
-			((Observer)enu.nextElement()).update();
+			Observer temp=(Observer)enu.nextElement();
+			temp.update();
+			temp.printNews(this.toString()+" said that "+ this.words);
 		}
 		
 	}
@@ -33,6 +36,12 @@ public class Comment implements Subject{
 	public Enumeration observers() {
 		// TODO Auto-generated method stub
 		return ((Vector)observersVector.clone()).elements();
+	}
+	
+	public void generateNewComment(String words){
+		this.words=words;
+		
+		this.notifyObservers();
 	}
 
 }
